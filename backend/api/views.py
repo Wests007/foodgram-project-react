@@ -111,9 +111,9 @@ class RecipeViewSet(ModelViewSet):
         response['Content-Disposition'] = ('attachment; '
                                            'filename="shopping_list.pdf"')
         page = canvas.Canvas(response)
-        page.setFont('Handicraft', size=22)
+        page.setFont('Handicraft', size=28)
         page.drawString(200, 800, 'Список покупок')
-        page.setFont('Handicraft', size=16)
+        page.setFont('Handicraft', size=14)
         height = 750
         for i, (name, data) in enumerate(final_list.items(), 1):
             page.drawString(75, height, (f'{i}. {name} - {data["amount"]} '
