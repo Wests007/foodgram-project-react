@@ -10,7 +10,7 @@ class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
         fields = '__all__'
-        read_only_fields = '__all__',
+        read_only_fields = ('__all__',)
 
 
 class IngredientSerializer(serializers.ModelSerializer):
@@ -124,11 +124,12 @@ class RecipeSerializer(serializers.ModelSerializer):
 
     @staticmethod
     def create_ingredients(ingredients, recipe):
-        for ingredient in ingredients:
-            IngredientAmount.objects.create(
+        IngredientAmount.objects.bulk_create([
+            IngredientAmount(
                 recipe=recipe, ingredient=ingredient['id'],
                 amount=ingredient['amount']
-            )
+            ) for ingredient in ingredients
+        ])
 
     @staticmethod
     def create_tags(tags, recipe):
