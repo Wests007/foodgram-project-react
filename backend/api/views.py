@@ -36,21 +36,7 @@ class IngredientsViewSet(ReadOnlyModelViewSet):
     search_fields = ('^name',)
 
 
-# Данный вьюсет поставил меня в глубокий ступор.
-# Я так и не понял как технически можно реализовать его упрощение,
-# при этом не нарушая DRY. В итоге впал в ступор.
-class RecipeViewSet(ModelViewSet):
-    queryset = Recipe.objects.all()
-    permission_classes = [IsAuthorOrReadOnly]
-    filter_backends = [DjangoFilterBackend]
-    filterset_class = RecipeFilter
-    pagination_class = CustomPageNumberPagination
-
-    def get_serializer_class(self):
-        if self.action in ('list', 'retrieve'):
-            return RecipeListSerializer
-        return RecipeSerializer
-
+class RecipeStaticMethod(ModelViewSet):
     @staticmethod
     def post_method_for_actions(request, pk, serializers):
         data = {'user': request.user.id, 'recipe': pk}
@@ -67,6 +53,8 @@ class RecipeViewSet(ModelViewSet):
         model_obj.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+
+class RecipeAction(RecipeStaticMethod):
     @action(detail=True, methods=['POST'],
             permission_classes=[IsAuthenticated])
     def favorite(self, request, pk):
@@ -125,3 +113,16 @@ class RecipeViewSet(ModelViewSet):
         page.showPage()
         page.save()
         return response
+
+
+class RecipeViewSet(RecipeAction):
+    queryset = Recipe.objects.all()
+    permission_classes = [IsAuthorOrReadOnly]
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = RecipeFilter
+    pagination_class = CustomPageNumberPagination
+
+    def get_serializer_class(self):
+        if self.action in ('list', 'retrieve'):
+            return RecipeListSerializer
+        return RecipeSerializer
