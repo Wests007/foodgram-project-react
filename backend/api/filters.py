@@ -11,7 +11,7 @@ class IngredientSearchFilter(SearchFilter):
 class RecipeFilter(FilterSet):
     tags = filters.AllValuesMultipleFilter(
         field_name='tags__slug',
-        lookup_expr='exact'
+        lookup_expr='in'
     )
     is_favorited = filters.BooleanFilter(method='filter_is_favorited')
     is_in_shopping_cart = filters.BooleanFilter(
