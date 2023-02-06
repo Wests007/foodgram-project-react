@@ -36,6 +36,9 @@ class IngredientsViewSet(ReadOnlyModelViewSet):
     search_fields = ('^name',)
 
 
+# Данный вьюсет поставил меня в глубокий ступор.
+# Я так и не понял как технически можно реализовать его упрощение,
+# при этом не нарушая DRY. В итоге впал в ступор.
 class RecipeViewSet(ModelViewSet):
     queryset = Recipe.objects.all()
     permission_classes = [IsAuthorOrReadOnly]
