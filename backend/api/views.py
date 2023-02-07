@@ -36,7 +36,7 @@ class IngredientsViewSet(ReadOnlyModelViewSet):
     search_fields = ('^name',)
 
 
-class RecipeStaticMethod(ModelViewSet):
+class RecipeStaticMethod():
     @staticmethod
     def post_method_for_actions(request, pk, serializers):
         data = {'user': request.user.id, 'recipe': pk}
@@ -115,7 +115,7 @@ class RecipeAction(RecipeStaticMethod):
         return response
 
 
-class RecipeViewSet(RecipeAction):
+class RecipeViewSet(RecipeAction, ModelViewSet):
     queryset = Recipe.objects.all()
     permission_classes = [IsAuthorOrReadOnly]
     filter_backends = [DjangoFilterBackend]
