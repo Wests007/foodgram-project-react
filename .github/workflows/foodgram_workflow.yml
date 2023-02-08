@@ -64,7 +64,7 @@ jobs:
           script: |
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/foodgram_backend
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/foodgram_frontend
-            sudo docker-compose down -v
+            sudo docker-compose stop
             rm .env
             touch .env
             echo SECRET_KEY='${{ secrets.SECRET_KEY }}' >> .env  
@@ -75,12 +75,13 @@ jobs:
             echo DB_HOST=${{ secrets.DB_HOST }} >> .env
             echo DB_PORT=${{ secrets.DB_PORT }} >> .env
             sudo docker-compose up -d --build
-            sudo docker cp docs wests007_backend_1:/app
+            sudo docker cp dump.json wests007_backend_1:/app
             sudo docker-compose exec -T backend python manage.py makemigrations
             sudo docker-compose exec -T backend python manage.py migrate
             sudo docker-compose exec -T backend python manage.py load_ingrs
             sudo docker-compose exec -T backend python manage.py load_tags
             sudo docker-compose exec -T backend python manage.py collectstatic --no-input
+            sudo docker-compose exec backend python manage.py loaddata dump.json
 
   telegram_message:
     name: Send telegram message
