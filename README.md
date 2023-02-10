@@ -129,11 +129,13 @@ docker-compose exec backend python manage.py collectstatic --noinput
 ```
 ## Сайт
 Сайт доступен по ссылке:
-[http://51.250.86.177/](http://51.250.86.177/)
+[http://51.250.86.177/](http://51.250.86.177/) или 
+[http://foodgram.myftp.biz/](http://foodgram.myftp.biz/)
 
 ## Документация к API
 API документация доступна по ссылке:
-[http://51.250.86.177/api/docs/](http://51.250.86.177/api/docs/)
+[http://51.250.86.177/api/docs/](http://51.250.86.177/api/docs/) или 
+[http://foodgram.myftp.biz/api/docs/](http://foodgram.myftp.biz/api/docs/)
 
 ## Авторы
 [Ромашков Александр](https://github.com/Wests007) - Разработал бэкенд и деплой сервиса.

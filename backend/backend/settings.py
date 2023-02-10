@@ -14,13 +14,22 @@ SECRET_KEY = os.getenv(
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [
+    'http://*localhost',
+    'https://*localhost',
+    'http://51.250.86.177',
+    'https://51.250.86.177',
+    'http://foodgram.myftp.biz',
+    'https://foodgram.myftp.biz',
+]
 
 CSRF_TRUSTED_ORIGINS = [
     'http://*localhost',
     'https://*localhost',
     'http://51.250.86.177',
     'https://51.250.86.177',
+    'http://foodgram.myftp.biz',
+    'https://foodgram.myftp.biz',
 ]
 
 INSTALLED_APPS = [
