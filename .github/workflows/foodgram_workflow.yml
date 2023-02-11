@@ -62,6 +62,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           passphrase: ${{ secrets.PASSPHRASE }}
           script: |
+            sudo docker-compose exec -T backend python manage.py dumpdata > dump.json
             sudo docker-compose stop
             sudo docker system prune -af
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/foodgram_backend
@@ -75,7 +76,7 @@ jobs:
             echo POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} >> .env
             echo DB_HOST=${{ secrets.DB_HOST }} >> .env
             echo DB_PORT=${{ secrets.DB_PORT }} >> .env
-            sudo docker-compose up -d --build
+            sudo docker-compose up -d
             sudo docker cp dump.json wests007_backend_1:/app
             sudo docker-compose exec -T backend python manage.py makemigrations
             sudo docker-compose exec -T backend python manage.py migrate
